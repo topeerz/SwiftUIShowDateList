@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "62418AD8-02BA-4FCF-BA79-D5625ED838E9",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:SwiftUIShowDateList.xcodeproj",
+      "identifier" : "C8AA1F452C764BC000D3B776",
+      "name" : "SwiftUIShowDateList"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:SwiftUIShowDateList.xcodeproj",
+        "identifier" : "C8AA1F552C764BC200D3B776",
+        "name" : "SwiftUIShowDateListTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:SwiftUIShowDateList.xcodeproj",
+        "identifier" : "C8AA1F5F2C764BC200D3B776",
+        "name" : "SwiftUIShowDateListUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

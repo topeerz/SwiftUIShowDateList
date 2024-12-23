@@ -1,0 +1,7 @@
+- ProjectName/
+  - Models/        // Data structures and business logic
+  - Views/         // SwiftUI Views
+  - ViewModels/    // State management and business logic interaction
+  - Services/      // Networking, data persistence, etc.
+  - Utils/         // Helper functions, extensions
+  - Resources/     // Assets, localization files
