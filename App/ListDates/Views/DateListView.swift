@@ -21,7 +21,7 @@ struct DebugView: View {
         let _ = Self._printChanges()
         Text("DebugView")
         Button("go to detail") {
-            appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail)
+            appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail(date: Date.now))
         }
     }
 }
@@ -59,11 +59,18 @@ struct DateListView: View {
             vi.onClick()
         }
         List(vm.currentDates.enumerated().map { $0 }, id: \.1) { index, date in
+            // Note: without direct usage of naviagation link I am not getting > for free ... May want to use navigation path only for feature-level stuff.
+            // Also, using NavigationLink doesn't alter navPath.count at all.
             Text("\(index + 1) \(date.date)")
                 .onTapGesture {
                     vi.onTap(at: index)
                 }
-            SubView()
+            // TODO: consider where to use path-navigation and where link-navigation. It seems that path-navigation should be use only where deep linking in needed?
+            //            NavigationLink {
+            //                SubView()
+            //            } label: {
+            //                Text("\(index + 1) \(date.date)")
+            //            }
         }
         .listStyle(.plain)
         .navigationTitle("My List")
@@ -100,6 +107,11 @@ struct DateListView: View {
             // TODO: add some animation ...
             Text("loading...")
         }
+        // TODO: it is possible to put navigatipon destinationDestination here
+        // however it will prevent enclosing navigationDestination from being callled (for the same destination type). Hence this can be used for local routers.
+        .navigationDestination(for: RootRouter.DateListViewDestination2.self) { destination in
+                OtherView()
+        }
     }
 }
 
@@ -116,10 +128,15 @@ struct SubView: View {
 
 struct OtherView: View {
     @Environment(AppM.self) var appM
+    @EnvironmentObject var appI: AppI
 
     var body: some View {
         Text("OtherView")
         Image(systemName: "figure.mind.and.body")
+
+        Button("go to detail") {
+            appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail(date:Date.now))
+        }
     }
 }
 

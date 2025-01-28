@@ -12,13 +12,19 @@ import SwiftUI // for NavigationPath
 
 @Observable
 class RootRouter {
+    // TODO: Is it possible to have sub-routers defining separate destinations but reusing navPath? Probably possible but does it make sense instead of adding new destination-enums (which could be probably moved from router to particular feature/views)?
 
     public protocol DestinationProtocol: Codable, Hashable {
     }
 
     public enum DateListViewDestination: DestinationProtocol {
-        case dateDetail
+        case dateDetail(date: Date)
         case two
+    }
+
+    public enum DateListViewDestination2: DestinationProtocol {
+        case dateDetail2
+        case two2
     }
 
     var navPath: Binding<NavigationPath>!
@@ -36,7 +42,7 @@ class RootRouter {
     }
 }
 
-class AppI: ObservableObject { // ObservableObject so I can pass it via env ...
+class AppI : ObservableObject {
     var appM: AppM?
     var appR: RootRouter?
 
@@ -55,6 +61,7 @@ class AppM {
 }
 
 @MainActor
+// TODO: move to Models (renamge to Interactors?)
 class DateListI {
     var appI: AppI!
     var vm: DateListVM!
@@ -86,7 +93,7 @@ class DateListI {
     }
 
     func onTap(at index: Int) {
-        appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail)
+        appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail(date: Date.now))
     }
 
     func onInit() async {
@@ -99,7 +106,7 @@ class DateListI {
     }
 
     func onNavigateButton() async {
-        appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail)
+        appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail(date: Date.now))
     }
 
     func onCancelButton() async {

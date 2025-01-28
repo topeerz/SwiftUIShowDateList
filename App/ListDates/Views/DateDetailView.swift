@@ -10,8 +10,10 @@ import SwiftUI
 
 struct DateDetailView: View {
 
+    let date: Date
+
     var body: some View {
-        Text("Date Detail")
+        Text("Date Detail \(date)")
         Image(systemName: "clock")
     }
 }

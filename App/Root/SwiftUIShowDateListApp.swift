@@ -53,8 +53,8 @@ struct SwiftUIShowDateListApp: App {
                 DateListView(appM: appM, appI: appI)
                 .navigationDestination(for: RootRouter.DateListViewDestination.self) { destination in
                     switch(destination) {
-                        case .dateDetail:
-                            DateDetailView()
+                        case .dateDetail(let date):
+                            DateDetailView(date: date)
 
                         case .two:
                             OtherView()
@@ -76,17 +76,18 @@ struct SwiftUIShowDateListApp: App {
     let _ = appR.navPath = $navPath
 
     NavigationStack(path: appR.navPath) {
+        DebugView()
         DateListView(appM: appM, appI: appI)
         .navigationDestination(for: RootRouter.DateListViewDestination.self) { destination in
             switch(destination) {
-                case .dateDetail:
-                    DateDetailView()
+                case .dateDetail(let date):
+                    DateDetailView(date: date)
 
                 case .two:
                     OtherView()
             }
         }
-        .environmentObject(appI)
-        .environment(appM)
     }
+    .environmentObject(appI)
+    .environment(appM)
 }
