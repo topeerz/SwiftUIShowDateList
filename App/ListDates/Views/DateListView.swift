@@ -145,12 +145,15 @@ struct OtherView: View {
 }
 
 #Preview {
+    @Previewable @State var navPath = NavigationPath()
     @Previewable @State var appM = AppM()
     @Previewable @State var appR = RootRouter()
     let appI = AppI(appM: appM, appR: appR)
-//    NavigationStack {
+    let _ = appR.navPath = $navPath
+
+    NavigationStack(path: appR.navPath) {
         DateListView(appM: appM, appI: appI)
-            .environmentObject(appI)  // so it can be later used in subviews if needed?
-            .environment(appM)  // so it can be later used in subviews if needed?
-//    }
+    }
+    .environmentObject(appI)  // so it can be later used in subviews if needed?
+    .environment(appM)  // so it can be later used in subviews if needed?
 }

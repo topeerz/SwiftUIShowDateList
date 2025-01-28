@@ -12,8 +12,6 @@ import SwiftUI // for NavigationPath
 
 @Observable
 class RootRouter {
-    // TODO: Is it possible to have sub-routers defining separate destinations but reusing navPath? Probably possible but does it make sense instead of adding new destination-enums (which could be probably moved from router to particular feature/views)?
-
     public protocol DestinationProtocol: Codable, Hashable {
     }
 
