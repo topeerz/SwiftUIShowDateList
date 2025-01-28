@@ -41,6 +41,7 @@ struct DateListView: View {
     init(appM: AppM, appI: AppI) {
         self.appM = appM
         self.appI = appI
+        self.vi.router = DateListRouter(navPath: self.appI.appR!.navPath)
 
         // GOTHA!: accessing @StateObject in init will cause creation of new vm each time (`Accessing StateObject's object without being installed on a View. This will create a new instance each time.`). Using @ObservedObject or @State doesn't cause this issue howeveer when @State is used for model (and Observation framework is in use) updating model properties outside of swiftui (like in interactor) won't take effect. (because new interactor + model are created here, but old ones are used in swiftui hierarchy).
         // In other words: we must use ObservedObject for vm - even though it will trigger updates on any property change if should be ok as this is VM ... This though means we are back to resource releasing problems when it comes to VM.
@@ -109,8 +110,11 @@ struct DateListView: View {
         }
         // TODO: it is possible to put navigatipon destinationDestination here
         // however it will prevent enclosing navigationDestination from being callled (for the same destination type). Hence this can be used for local routers.
-        .navigationDestination(for: RootRouter.DateListViewDestination2.self) { destination in
-                OtherView()
+        // navigationDestination(for: RootRouter.DateListViewDestination2.self) { destination in
+        // OtherView()
+        // }
+        .navigationDestination(for: DateListRouter.DateListViewDestination3.self) { destination in
+            OtherView()
         }
     }
 }

@@ -42,6 +42,23 @@ class RootRouter {
     }
 }
 
+class DateListRouter {
+    public enum DateListViewDestination3: RootRouter.DestinationProtocol {
+        case dateDetail
+    }
+
+    var navPath: Binding<NavigationPath>!
+
+    init(navPath: Binding<NavigationPath>!) {
+        self.navPath = navPath
+    }
+
+    // TODO: redundant with RootRouter
+    func navigate(to destination: any RootRouter.DestinationProtocol) {
+        navPath.wrappedValue.append(destination)
+    }
+}
+
 class AppI : ObservableObject {
     var appM: AppM?
     var appR: RootRouter?
@@ -65,11 +82,10 @@ class AppM {
 class DateListI {
     var appI: AppI!
     var vm: DateListVM!
+    var router: DateListRouter!
+
     // this will be created during initialization of swift ui - hence seems it will get called in UT (including sending requests) before we actually test anything?
     var dateService: DateServiceProtocol = DateService(urlSession: URLSession.shared)
-
-    init() {
-    }
 
     func populateList() async {
         vm.loading = true
@@ -93,7 +109,8 @@ class DateListI {
     }
 
     func onTap(at index: Int) {
-        appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail(date: Date.now))
+//        appI.appR?.navigate(to: RootRouter.DateListViewDestination.dateDetail(date: Date.now))
+        router.navigate(to: DateListRouter.DateListViewDestination3.dateDetail)
     }
 
     func onInit() async {
